@@ -1,0 +1,79 @@
+name: Generate and Test gRPC Stubs
+
+on:
+  push:
+    paths:
+      - 'proto/**'
+      - '.github/workflows/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      ##################################################
+      # 1) CHECK OUT REPO
+      ##################################################
+      - name: Check out repository
+        uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      ##################################################
+      # 2) GENERATE PYTHON STUBS
+      ##################################################
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.12'
+
+      - name: Install Python gRPC tools
+        run: |
+          pip install --upgrade pip
+          pip install grpcio-tools
+
+      - name: Create Python output directory
+        run: mkdir -p ./generated/python
+
+      - name: Generate Python code
+        run: |
+          python -m grpc_tools.protoc \
+            -I=./proto \
+            --python_out=./generated/python \
+            --grpc_python_out=./generated/python \
+            ./proto/*.proto
+
+      ##################################################
+      # 3) GENERATE NODE.JS / TYPESCRIPT STUBS
+      ##################################################
+      - name: Set up Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '22'
+
+      - name: Install Node dev dependencies
+        run: |
+          npm install --global grpc-tools @grpc/proto-loader ts-protoc-gen
+
+      - name: Create Node output directory
+        run: mkdir -p ./generated/node
+
+      - name: Generate Node stubs
+        run: |
+          grpc_tools_node_protoc \
+            --plugin=protoc-gen-ts=$(which protoc-gen-ts) \
+            --js_out=import_style=commonjs,binary:./generated/node \
+            --ts_out=./generated/node \
+            -I=./proto \
+            ./proto/*.proto
+
+      ##################################################
+      # 4) COMMIT GENERATED FILES BACK TO REPO
+      ##################################################
+      - name: Commit generated files
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore: update generated gRPC stubs [skip ci]"
+          file_pattern: "generated/**"
