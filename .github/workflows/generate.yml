@@ -35,14 +35,14 @@ jobs:
           pip install grpcio-tools
 
       - name: Create Python output directory
-        run: mkdir -p ./generated/python
+        run: mkdir -p ./generated/compsci399_grpc
 
       - name: Generate Python code
         run: |
           python -m grpc_tools.protoc \
             -I=./proto \
-            --python_out=./generated/python \
-            --grpc_python_out=./generated/python \
+            --python_out=./generated/compsci399_grpc \
+            --grpc_python_out=./generated/compsci399_grpc \
             ./proto/*.proto
 
       ##################################################

@@ -1,9 +1,10 @@
-# Generate gRPC code
-The following command generates the gRPC code from the proto files for python.
+This repository contains the generated gRPC code for the compsci399 project.
+
+## Python
 ```bash
-python -m grpc_tools.protoc \
-    -I=./proto \
-    --python_out=./generated/python \
-    --grpc_python_out=./generated/python \
-    ./proto/*.proto
+pip install git+https://github.com/capstone2025uoa/grpc.git
+```
+Usage in a project:
+```python
+from compsci399_grpc import greeter_pb2, greeter_pb2_grpc
 ```
