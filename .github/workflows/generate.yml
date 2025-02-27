@@ -70,7 +70,63 @@ jobs:
             ./proto/*.proto
 
       ##################################################
-      # 4) COMMIT GENERATED FILES BACK TO REPO
+      # 4) GENERATE C# STUBS
+      ##################################################
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '9.0.x'
+
+      - name: Install Protobuf compiler and C# gRPC tools
+        id: install-tools
+        run: |
+          # Install protobuf compiler
+          sudo apt-get update
+          sudo apt-get install -y protobuf-compiler
+
+          # Create a temporary project to install gRPC tools packages
+          mkdir -p ./temp-project
+          cd ./temp-project
+          dotnet new console
+          dotnet add package Grpc.Tools
+          dotnet add package Google.Protobuf
+          
+          # Find the path to grpc_csharp_plugin in NuGet packages
+          NUGET_DIR=~/.nuget/packages
+          GRPC_TOOLS_VERSION=$(dotnet list package | grep Grpc.Tools | awk '{print $4}')
+          TOOL_PATH="${NUGET_DIR}/grpc.tools/${GRPC_TOOLS_VERSION}/tools/linux_x64/grpc_csharp_plugin"
+          
+          if [ -f "$TOOL_PATH" ]; then
+            echo "Found gRPC C# plugin at: $TOOL_PATH"
+            chmod +x "$TOOL_PATH"
+            # Set the output for other steps to use
+            echo "plugin_path=$TOOL_PATH" >> "$GITHUB_OUTPUT"
+          else
+            echo "ERROR: Could not find grpc_csharp_plugin at expected path: $TOOL_PATH"
+            echo "Searching for it in the NuGet packages directory..."
+            find $NUGET_DIR -name "grpc_csharp_plugin" -type f
+            exit 1
+          fi
+          
+          cd ..
+
+      - name: Create C# output directory
+        run: mkdir -p ./generated/csharp
+
+      - name: Generate C# code
+        run: |
+          protoc \
+            --csharp_out=./generated/csharp \
+            --grpc_out=./generated/csharp \
+            --plugin=protoc-gen-grpc=${{ steps.install-tools.outputs.plugin_path }} \
+            -I=./proto \
+            ./proto/*.proto
+          
+          # Clean up temporary project
+          rm -rf ./temp-project
+
+      ##################################################
+      # 5) COMMIT GENERATED FILES BACK TO REPO
       ##################################################
       - name: Commit generated files
         uses: stefanzweifel/git-auto-commit-action@v5
