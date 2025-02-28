@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+package product;
+
+// Define the Product service
+service Product {
+  // Get a specific product by ID
+  rpc GetProduct (GetProductRequest) returns (ProductResponse);
+  
+  // List all products, optionally filtered by category
+  rpc ListProducts (ListProductsRequest) returns (ListProductsResponse);
+}
+
+// Request for getting a specific product
+message GetProductRequest {
+  string product_id = 1;
+}
+
+// Request for listing products
+message ListProductsRequest {
+  string category = 1;  // Optional filter by category
+  int32 page_size = 2;  // Number of results per page
+  int32 page_number = 3; // Page number (0-indexed)
+}
+
+// Single product message
+message ProductResponse {
+  string id = 1;
+  string name = 2;
+  string description = 3;
+  double price = 4;
+  string category = 5;
+  int32 stock = 6;
+}
+
+// Response for listing products
+message ListProductsResponse {
+  repeated ProductResponse products = 1;
+  int32 total_count = 2;
+  int32 page_count = 3;
+} 

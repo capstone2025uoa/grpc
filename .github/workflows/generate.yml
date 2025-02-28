@@ -76,6 +76,35 @@ jobs:
           print(f"Created __init__.py with imports for: {", ".join(proto_base_names)})")
           '
 
+      - name: Fix Python gRPC imports
+        run: |
+          # Find and fix all *_pb2_grpc.py files to use relative imports
+          python -c '
+          import os
+          import glob
+          import re
+          
+          # Find all *_pb2_grpc.py files
+          grpc_files = glob.glob("./generated/compsci399_grpc/*_pb2_grpc.py")
+          
+          for file_path in grpc_files:
+              with open(file_path, "r") as f:
+                  content = f.read()
+              
+              # Replace imports like "import X_pb2 as X__pb2" with "from . import X_pb2 as X__pb2"
+              fixed_content = re.sub(
+                  r"import (\w+_pb2) as (\w+__pb2)",
+                  r"from . import \1 as \2",
+                  content
+              )
+              
+              # Write the file back
+              with open(file_path, "w") as f:
+                  f.write(fixed_content)
+              
+              print(f"Fixed imports in {os.path.basename(file_path)}")
+          '
+
       ##################################################
       # 3) GENERATE NODE.JS / TYPESCRIPT STUBS
       ##################################################
@@ -162,7 +191,7 @@ jobs:
       - name: Create C# NuGet package project
         run: |
           # Create a class library project for the NuGet package
-          dotnet new classlib -n Compsci399Grpc -o ./generated/csharp-package
+          dotnet new classlib -n Compsci399Grpc -o ./generated/csharp-package --force
           cd ./generated/csharp-package
           
           # Edit the project file to include necessary properties
