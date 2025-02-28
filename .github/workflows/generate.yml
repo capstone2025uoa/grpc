@@ -135,7 +135,7 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: '9.0.x'
+          dotnet-version: '8.0.x'
 
       - name: Install Protobuf compiler and C# gRPC tools
         id: install-tools
@@ -198,7 +198,7 @@ jobs:
           cat > Compsci399Grpc.csproj << EOF
           <Project Sdk="Microsoft.NET.Sdk">
             <PropertyGroup>
-              <TargetFramework>net9.0</TargetFramework>
+              <TargetFramework>net8.0</TargetFramework>
               <ImplicitUsings>enable</ImplicitUsings>
               <Nullable>enable</Nullable>
               <PackageId>Compsci399Grpc</PackageId>
