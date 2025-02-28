@@ -203,20 +203,71 @@ jobs:
               <ImplicitUsings>enable</ImplicitUsings>
               <Nullable>enable</Nullable>
               <PackageId>Compsci399Grpc</PackageId>
-              <Version>1.0.1</Version>
+              <Version>1.0.2</Version>
               <Authors>gRPC Generator</Authors>
               <Company>COMPSCI399</Company>
               <Description>Auto-generated gRPC client stubs</Description>
               <PackageLicenseExpression>MIT</PackageLicenseExpression>
               <RepositoryUrl>https://github.com/capstone2025uoa/grpc</RepositoryUrl>
               <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+              <PackageListedStatus>Hidden</PackageListedStatus>
+              <PackageReadmeFile>README.md</PackageReadmeFile>
             </PropertyGroup>
             <ItemGroup>
               <PackageReference Include="Google.Protobuf" Version="3.29.3" />
               <PackageReference Include="Grpc.Net.Client" Version="2.67.0" />
               <PackageReference Include="Grpc.Tools" Version="2.70.0" PrivateAssets="All" />
             </ItemGroup>
+            <ItemGroup>
+              <None Include="README.md" Pack="true" PackagePath="\" />
+            </ItemGroup>
           </Project>
+          EOF
+          
+          # Create README.md file
+          cat > README.md << EOF
+          # Compsci399Grpc
+
+          This package contains auto-generated gRPC client stubs for use with the COMPSCI399 services.
+
+          ## Installation
+
+          ```bash
+          dotnet add package Compsci399Grpc
+          ```
+
+          ## Usage
+
+          ```csharp
+          using Compsci399Grpc;
+          using Grpc.Net.Client;
+
+          // Create a gRPC channel
+          using var channel = GrpcChannel.ForAddress("https://your-grpc-service-url");
+
+          // Create a client for the specific service you want to use
+          // Example for a Greeter service:
+          var client = new Greeter.GreeterClient(channel);
+
+          // Make requests to the service
+          var reply = await client.SayHelloAsync(new HelloRequest { Name = "YourName" });
+          Console.WriteLine($"Greeting: {reply.Message}");
+          ```
+
+          ## Available Services
+
+          This package includes the following gRPC services:
+
+          $(find ../csharp -name "*Grpc.cs" | xargs grep "public class" | sed 's/.*public class //g' | sed 's/ :.*//g' | sort | uniq | sed 's/^/- /g')
+
+          ## Version History
+
+          - 1.0.1: Current release
+          - 1.0.0: Initial release
+
+          ## License
+
+          MIT
           EOF
 
       - name: Copy generated C# files to package project

@@ -300,19 +300,19 @@
     ]
   },
   "packageFolders": {
-    "/home/runner/.nuget/packages/": {}
+    "/Users/michael/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/runner/work/grpc/grpc/generated/csharp-package/Compsci399Grpc.csproj",
+      "projectUniqueName": "/Users/michael/Projects/grpc/generated/csharp-package/Compsci399Grpc.csproj",
       "projectName": "Compsci399Grpc",
-      "projectPath": "/home/runner/work/grpc/grpc/generated/csharp-package/Compsci399Grpc.csproj",
-      "packagesPath": "/home/runner/.nuget/packages/",
-      "outputPath": "/home/runner/work/grpc/grpc/generated/csharp-package/obj/",
+      "projectPath": "/Users/michael/Projects/grpc/generated/csharp-package/Compsci399Grpc.csproj",
+      "packagesPath": "/Users/michael/.nuget/packages/",
+      "outputPath": "/Users/michael/Projects/grpc/generated/csharp-package/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/home/runner/.nuget/NuGet/NuGet.Config"
+        "/Users/michael/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
@@ -371,7 +371,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/8.0.406/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.303/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
