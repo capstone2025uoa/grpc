@@ -1,0 +1,13 @@
+/home/runner/work/grpc/grpc/generated/csharp-package/bin/Release/net8.0/Compsci399Grpc.deps.json
+/home/runner/work/grpc/grpc/generated/csharp-package/bin/Release/net8.0/Compsci399Grpc.dll
+/home/runner/work/grpc/grpc/generated/csharp-package/bin/Release/net8.0/Compsci399Grpc.pdb
+/home/runner/work/grpc/grpc/generated/csharp-package/obj/Release/net8.0/Compsci399Grpc.csproj.AssemblyReference.cache
+/home/runner/work/grpc/grpc/generated/csharp-package/obj/Release/net8.0/Compsci399Grpc.GeneratedMSBuildEditorConfig.editorconfig
+/home/runner/work/grpc/grpc/generated/csharp-package/obj/Release/net8.0/Compsci399Grpc.AssemblyInfoInputs.cache
+/home/runner/work/grpc/grpc/generated/csharp-package/obj/Release/net8.0/Compsci399Grpc.AssemblyInfo.cs
+/home/runner/work/grpc/grpc/generated/csharp-package/obj/Release/net8.0/Compsci399Grpc.csproj.CoreCompileInputs.cache
+/home/runner/work/grpc/grpc/generated/csharp-package/obj/Release/net8.0/Compsci399Grpc.sourcelink.json
+/home/runner/work/grpc/grpc/generated/csharp-package/obj/Release/net8.0/Compsci399Grpc.dll
+/home/runner/work/grpc/grpc/generated/csharp-package/obj/Release/net8.0/refint/Compsci399Grpc.dll
+/home/runner/work/grpc/grpc/generated/csharp-package/obj/Release/net8.0/Compsci399Grpc.pdb
+/home/runner/work/grpc/grpc/generated/csharp-package/obj/Release/net8.0/ref/Compsci399Grpc.dll

@@ -7,15 +7,15 @@
     <license type="expression">MIT</license>
     <licenseUrl>https://licenses.nuget.org/MIT</licenseUrl>
     <description>Auto-generated gRPC client stubs</description>
-    <repository type="git" url="https://github.com/capstone2025uoa/grpc" commit="d86d4011d5e1720c7d1365a99064088774b83da2" />
+    <repository type="git" url="https://github.com/capstone2025uoa/grpc" commit="18a440ab55224e36b4be762d8e8f91a39d699c74" />
     <dependencies>
-      <group targetFramework="net9.0">
+      <group targetFramework="net8.0">
         <dependency id="Google.Protobuf" version="3.29.3" exclude="Build,Analyzers" />
         <dependency id="Grpc.Net.Client" version="2.67.0" exclude="Build,Analyzers" />
       </group>
     </dependencies>
   </metadata>
   <files>
-    <file src="/home/runner/work/grpc/grpc/generated/csharp-package/bin/Release/net9.0/Compsci399Grpc.dll" target="lib/net9.0/Compsci399Grpc.dll" />
+    <file src="/home/runner/work/grpc/grpc/generated/csharp-package/bin/Release/net8.0/Compsci399Grpc.dll" target="lib/net8.0/Compsci399Grpc.dll" />
   </files>
 </package>
