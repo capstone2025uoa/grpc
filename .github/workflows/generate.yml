@@ -24,6 +24,9 @@ jobs:
       ##################################################
       # 2) GENERATE PYTHON STUBS
       ##################################################
+      # Note: We generate a simple __init__.py with explicit imports
+      # instead of using dynamic imports to avoid issues with relative imports
+      # when the package is installed as a dependency
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
@@ -44,6 +47,34 @@ jobs:
             --python_out=./generated/compsci399_grpc \
             --grpc_python_out=./generated/compsci399_grpc \
             ./proto/*.proto
+
+      - name: Create simplified __init__.py
+        run: |
+          # Remove existing __init__.py if it exists
+          rm -f ./generated/compsci399_grpc/__init__.py
+          
+          # Create a new __init__.py with explicit imports
+          python -c '
+          import os
+          import glob
+
+          init_content = "# Auto-generated explicit imports\n"
+          
+          # Get all proto files
+          proto_files = glob.glob("./proto/*.proto")
+          proto_base_names = [os.path.splitext(os.path.basename(f))[0] for f in proto_files]
+          
+          # Add explicit imports for each proto module
+          for name in sorted(proto_base_names):
+              init_content += f"from .{name}_pb2 import *\n"
+              init_content += f"from .{name}_pb2_grpc import *\n"
+          
+          # Write the file
+          with open("./generated/compsci399_grpc/__init__.py", "w") as f:
+              f.write(init_content)
+          
+          print(f"Created __init__.py with imports for: {", ".join(proto_base_names)})")
+          '
 
       ##################################################
       # 3) GENERATE NODE.JS / TYPESCRIPT STUBS
@@ -126,7 +157,61 @@ jobs:
           rm -rf ./temp-project
 
       ##################################################
-      # 5) COMMIT GENERATED FILES BACK TO REPO
+      # 5) PACKAGE AND PUBLISH C# CODE TO NUGET
+      ##################################################
+      - name: Create C# NuGet package project
+        run: |
+          # Create a class library project for the NuGet package
+          dotnet new classlib -n Compsci399Grpc -o ./generated/csharp-package
+          cd ./generated/csharp-package
+          
+          # Edit the project file to include necessary properties
+          cat > Compsci399Grpc.csproj << EOF
+          <Project Sdk="Microsoft.NET.Sdk">
+            <PropertyGroup>
+              <TargetFramework>net9.0</TargetFramework>
+              <ImplicitUsings>enable</ImplicitUsings>
+              <Nullable>enable</Nullable>
+              <PackageId>Compsci399Grpc</PackageId>
+              <Version>1.0.0</Version>
+              <Authors>gRPC Generator</Authors>
+              <Company>COMPSCI399</Company>
+              <Description>Auto-generated gRPC client stubs</Description>
+              <PackageLicenseExpression>MIT</PackageLicenseExpression>
+              <RepositoryUrl>https://github.com/capstone2025uoa/grpc</RepositoryUrl>
+              <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+            </PropertyGroup>
+            <ItemGroup>
+              <PackageReference Include="Google.Protobuf" Version="3.29.3" />
+              <PackageReference Include="Grpc.Net.Client" Version="2.67.0" />
+              <PackageReference Include="Grpc.Tools" Version="2.70.0" PrivateAssets="All" />
+            </ItemGroup>
+          </Project>
+          EOF
+
+      - name: Copy generated C# files to package project
+        run: |
+          # Copy all the generated .cs files to the package project
+          cp ./generated/csharp/*.cs ./generated/csharp-package/
+          
+          # Remove Class1.cs that comes with the template
+          rm -f ./generated/csharp-package/Class1.cs
+
+      - name: Build and pack NuGet package
+        run: |
+          cd ./generated/csharp-package
+          dotnet build -c Release
+          dotnet pack -c Release -o ./nupkg
+
+      - name: Publish NuGet package
+        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+        run: |
+          cd ./generated/csharp-package/nupkg
+          # Replace API_KEY with your actual NuGet API key stored in GitHub secrets
+          dotnet nuget push *.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate
+
+      ##################################################
+      # 6) COMMIT GENERATED FILES BACK TO REPO
       ##################################################
       - name: Commit generated files
         uses: stefanzweifel/git-auto-commit-action@v5
