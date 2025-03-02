@@ -4,5 +4,4 @@ node_modules
 *.egg-info/
 dist/
 build/
-compsci399_grpc
 __pycache__/
