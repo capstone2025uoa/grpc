@@ -5,6 +5,7 @@ on:
     paths:
       - 'proto/**'
       - '.github/workflows/**'
+      - 'version.txt'
   workflow_dispatch:
 
 jobs:
@@ -12,15 +13,31 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      packages: write
 
     steps:
       ##################################################
-      # 1) CHECK OUT REPO
+      # 1) CHECK OUT REPO AND SET VERSION
       ##################################################
       - name: Check out repository
         uses: actions/checkout@v2
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: Set common version
+        id: version
+        run: |
+          # Read version from version.txt file
+          VERSION=$(cat version.txt | tr -d '\n\r\t ')
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+          echo "Common version set to: $VERSION"
+          
+          # For auto-versioning based on commits, uncomment these lines
+          # COMMIT_COUNT=$(git rev-list --count HEAD)
+          # VERSION="1.0.$COMMIT_COUNT"
+          # echo "VERSION=$VERSION" >> $GITHUB_ENV
+          # echo "Auto-generated version: $VERSION"
+          # echo "$VERSION" > version.txt
 
       ##################################################
       # 2) GENERATE PYTHON STUBS
@@ -60,6 +77,7 @@ jobs:
           import glob
 
           init_content = "# Auto-generated explicit imports\n"
+          init_content += f"__version__ = \"${{ env.VERSION }}\"\n\n"
           
           # Get all proto files
           proto_files = glob.glob("./proto/*.proto")
@@ -106,6 +124,24 @@ jobs:
               print(f"Fixed imports in {os.path.basename(file_path)}")
           '
 
+      - name: Update Python setup.py with version
+        run: |
+          # Update setup.py with the common version
+          cat > setup.py << EOF
+          from setuptools import setup, find_namespace_packages
+
+          setup(
+              name="compsci399-grpc",
+              version="${{ env.VERSION }}",
+              packages=find_namespace_packages(include=["generated.*"]),
+              install_requires=[
+                  "grpcio>=1.44.0",
+                  "protobuf>=3.19.0"
+              ],
+              package_data={"": ["*.py"]},
+          )
+          EOF
+
       ##################################################
       # 3) GENERATE NODE.JS / TYPESCRIPT STUBS
       ##################################################
@@ -113,6 +149,7 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: '22'
+          registry-url: 'https://registry.npmjs.org'
 
       - name: Install Node dev dependencies
         run: |
@@ -203,7 +240,7 @@ jobs:
               <ImplicitUsings>enable</ImplicitUsings>
               <Nullable>enable</Nullable>
               <PackageId>Compsci399Grpc</PackageId>
-              <Version>1.0.2</Version>
+              <Version>${{ env.VERSION }}</Version>
               <Authors>gRPC Generator</Authors>
               <Company>COMPSCI399</Company>
               <Description>Auto-generated gRPC client stubs</Description>
@@ -224,51 +261,52 @@ jobs:
           </Project>
           EOF
           
-          # Create README.md file
-          cat > README.md << EOF
-          # Compsci399Grpc
-
-          This package contains auto-generated gRPC client stubs for use with the COMPSCI399 services.
-
-          ## Installation
-
-          ```bash
-          dotnet add package Compsci399Grpc
-          ```
-
-          ## Usage
-
-          ```csharp
-          using Compsci399Grpc;
-          using Grpc.Net.Client;
-
-          // Create a gRPC channel
-          using var channel = GrpcChannel.ForAddress("https://your-grpc-service-url");
-
-          // Create a client for the specific service you want to use
-          // Example for a Greeter service:
-          var client = new Greeter.GreeterClient(channel);
-
-          // Make requests to the service
-          var reply = await client.SayHelloAsync(new HelloRequest { Name = "YourName" });
-          Console.WriteLine($"Greeting: {reply.Message}");
-          ```
-
-          ## Available Services
-
-          This package includes the following gRPC services:
-
-          $(find ../csharp -name "*Grpc.cs" | xargs grep "public class" | sed 's/.*public class //g' | sed 's/ :.*//g' | sort | uniq | sed 's/^/- /g')
-
-          ## Version History
-
-          - 1.0.1: Current release
-          - 1.0.0: Initial release
-
-          ## License
-
-          MIT
-          EOF
+          # Create README.md with the main content
+          echo "# Compsci399Grpc" > README.md
+          echo "" >> README.md
+          echo "This package contains auto-generated gRPC client stubs for use with the COMPSCI399 services." >> README.md
+          echo "" >> README.md
+          echo "## Installation" >> README.md
+          echo "" >> README.md
+          echo "\`\`\`bash" >> README.md
+          echo "dotnet add package Compsci399Grpc" >> README.md
+          echo "\`\`\`" >> README.md
+          echo "" >> README.md
+          echo "## Usage" >> README.md
+          echo "" >> README.md
+          echo "\`\`\`csharp" >> README.md
+          echo "using Compsci399Grpc;" >> README.md
+          echo "using Grpc.Net.Client;" >> README.md
+          echo "" >> README.md
+          echo "// Create a gRPC channel" >> README.md
+          echo "using var channel = GrpcChannel.ForAddress(\"https://your-grpc-service-url\");" >> README.md
+          echo "" >> README.md
+          echo "// Create a client for the specific service you want to use" >> README.md
+          echo "// Example for a Greeter service:" >> README.md
+          echo "var client = new Greeter.GreeterClient(channel);" >> README.md
+          echo "" >> README.md
+          echo "// Make requests to the service" >> README.md
+          echo "var reply = await client.SayHelloAsync(new HelloRequest { Name = \"YourName\" });" >> README.md
+          echo "Console.WriteLine(\$\"Greeting: {reply.Message}\");" >> README.md
+          echo "\`\`\`" >> README.md
+          echo "" >> README.md
+          echo "## Available Services" >> README.md
+          echo "" >> README.md
+          echo "This package includes the following gRPC services:" >> README.md
+          echo "" >> README.md
+          
+          # Find services and append to README
+          find ../csharp -name "*Grpc.cs" | xargs grep "public class" | sed 's/.*public class //g' | sed 's/ :.*//g' | sort | uniq | sed 's/^/- /g' >> README.md
+          
+          # Add version history and license
+          echo "" >> README.md
+          echo "## Version History" >> README.md
+          echo "" >> README.md
+          echo "- ${{ env.VERSION }}: Current release" >> README.md
+          echo "" >> README.md
+          echo "## License" >> README.md
+          echo "" >> README.md
+          echo "MIT" >> README.md
 
       - name: Copy generated C# files to package project
         run: |
@@ -292,10 +330,41 @@ jobs:
           dotnet nuget push *.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate
 
       ##################################################
-      # 6) COMMIT GENERATED FILES BACK TO REPO
+      # 6) PACKAGE AND PUBLISH NODE.JS / TYPESCRIPT TO NPM
+      ##################################################
+      - name: Generate dynamic index files for Node package
+        run: |
+          # Make the script executable if not already
+          chmod +x ./scripts/generate-index.js
+          
+          # Run the script to generate index.js and index.d.ts
+          node ./scripts/generate-index.js
+
+      - name: Update Node package version
+        run: |
+          # Get current version from package.json
+          CURRENT_VERSION=$(node -e "console.log(require('./package.json').version)")
+          
+          # Only update version if different
+          if [ "$CURRENT_VERSION" != "${{ env.VERSION }}" ]; then
+            echo "Updating npm package version from $CURRENT_VERSION to ${{ env.VERSION }}"
+            npm version ${{ env.VERSION }} --no-git-tag-version --allow-same-version
+          else
+            echo "Package.json version already at ${{ env.VERSION }}, no update needed"
+          fi
+
+      - name: Publish to npm
+        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+        run: |
+          npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      ##################################################
+      # 7) COMMIT GENERATED FILES BACK TO REPO
       ##################################################
       - name: Commit generated files
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "chore: update generated gRPC stubs [skip ci]"
-          file_pattern: "generated/**"
+          file_pattern: "generated/** index.js index.d.ts package.json setup.py"

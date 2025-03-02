@@ -1,0 +1,44 @@
+{
+  "name": "@capstone2025uoa/grpc-client",
+  "version": "1.0.2",
+  "description": "Auto-generated gRPC client stubs for COMPSCI399 services",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "generated/node/*.js",
+    "generated/node/*.d.ts"
+  ],
+  "scripts": {
+    "prepublishOnly": "node scripts/generate-index.js",
+    "version": "node -e \"const fs=require('fs');const v=fs.readFileSync('version.txt','utf8').trim();const pkg=require('./package.json');pkg.version=v;fs.writeFileSync('package.json',JSON.stringify(pkg,null,2));\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/capstone2025uoa/grpc.git"
+  },
+  "keywords": [
+    "grpc",
+    "protobuf",
+    "typescript",
+    "compsci399"
+  ],
+  "author": "COMPSCI399",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/capstone2025uoa/grpc/issues"
+  },
+  "homepage": "https://github.com/capstone2025uoa/grpc#readme",
+  "dependencies": {
+    "@grpc/grpc-js": "^1.8.0",
+    "google-protobuf": "^3.21.0"
+  },
+  "peerDependencies": {
+    "typescript": ">=4.0.0"
+  },
+  "devDependencies": {
+    "@types/google-protobuf": "^3.15.0",
+    "typescript": "^5.0.0"
+  }
+} 
