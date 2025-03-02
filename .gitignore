@@ -1,7 +1,6 @@
 venv
 .DS_Store
 node_modules
-compsci399_grpc/
 *.egg-info/
 dist/
 build/
