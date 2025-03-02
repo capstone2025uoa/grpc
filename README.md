@@ -4,23 +4,23 @@ This repository contains auto-generated client stubs for the COMPSCI399 gRPC ser
 
 ## Available Packages
 
-All packages share the same version number, currently: **1.0.2**
+All packages share the same version number, currently: **1.0.3**
 
 ### Node.js / TypeScript Package
 
-[![npm version](https://badge.fury.io/js/@capstone2025uoa%2Fgrpc-client.svg)](https://badge.fury.io/js/@capstone2025uoa%2Fgrpc-client)
+[![npm version](https://badge.fury.io/js/compsci399-grpc-client.svg)](https://badge.fury.io/js/compsci399-grpc-client)
 
 ```bash
-npm install @capstone2025uoa/grpc-client
+npm install compsci399-grpc-client
 # or
-yarn add @capstone2025uoa/grpc-client
+yarn add compsci399-grpc-client
 ```
 
 #### TypeScript Usage
 
 ```typescript
 import { grpc } from '@grpc/grpc-js';
-import { user, product, greeter } from '@capstone2025uoa/grpc-client';
+import { user, product, greeter } from 'compsci399-grpc-client';
 
 // Create a request
 const request = new user.GetUserRequest();
