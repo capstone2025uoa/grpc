@@ -143,6 +143,25 @@ jobs:
           EOF
 
       ##################################################
+      # 2.1) BUILD AND PUBLISH PYTHON PACKAGE TO PYPI
+      ##################################################
+      - name: Install Python build tools
+        run: |
+          pip install build twine
+
+      - name: Build Python package
+        run: |
+          python -m build
+
+      - name: Publish Python package to PyPI
+        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+        env:
+          TWINE_USERNAME: "__token__"
+          TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
+        run: |
+          twine upload dist/*
+
+      ##################################################
       # 3) GENERATE NODE.JS / TYPESCRIPT STUBS
       ##################################################
       - name: Set up Node
