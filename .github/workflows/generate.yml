@@ -163,7 +163,9 @@ jobs:
           grpc_tools_node_protoc \
             --plugin=protoc-gen-ts=$(which protoc-gen-ts) \
             --js_out=import_style=commonjs,binary:./generated/node \
-            --ts_out=./generated/node \
+            --ts_out=service=grpc-node:./generated/node \
+            --grpc_out=grpc_js:./generated/node \
+            --plugin=protoc-gen-grpc=$(which grpc_tools_node_protoc_plugin) \
             -I=./proto \
             ./proto/*.proto
 
@@ -291,8 +293,6 @@ jobs:
           echo "\`\`\`" >> README.md
           echo "" >> README.md
           echo "## Available Services" >> README.md
-          echo "" >> README.md
-          echo "This package includes the following gRPC services:" >> README.md
           echo "" >> README.md
           
           # Find services and append to README

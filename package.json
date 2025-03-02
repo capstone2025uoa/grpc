@@ -12,7 +12,8 @@
   ],
   "scripts": {
     "prepublishOnly": "node scripts/generate-index.js",
-    "version": "node -e \"const fs=require('fs');const v=fs.readFileSync('version.txt','utf8').trim();const pkg=require('./package.json');pkg.version=v;fs.writeFileSync('package.json',JSON.stringify(pkg,null,2));\""
+    "version": "node -e \"const fs=require('fs');const v=fs.readFileSync('version.txt','utf8').trim();const pkg=require('./package.json');pkg.version=v;fs.writeFileSync('package.json',JSON.stringify(pkg,null,2));\"",
+    "generate": "grpc_tools_node_protoc --plugin=protoc-gen-ts=`which protoc-gen-ts` --js_out=import_style=commonjs,binary:./generated/node --ts_out=service=grpc-node:./generated/node --grpc_out=grpc_js:./generated/node --plugin=protoc-gen-grpc=`which grpc_tools_node_protoc_plugin` -I=./proto ./proto/*.proto"
   },
   "repository": {
     "type": "git",
@@ -38,7 +39,10 @@
     "typescript": ">=4.0.0"
   },
   "devDependencies": {
+    "@grpc/proto-loader": "^0.7.10",
     "@types/google-protobuf": "^3.15.0",
+    "grpc-tools": "^1.12.4", 
+    "ts-protoc-gen": "^0.15.0",
     "typescript": "^5.0.0"
   }
 }

@@ -16,21 +16,21 @@ npm install compsci399-grpc-client
 yarn add compsci399-grpc-client
 ```
 
-#### TypeScript Usage
+#### TypeScript Usage (Client)
 
 ```typescript
-import { grpc } from '@grpc/grpc-js';
-import { user, product, greeter } from 'compsci399-grpc-client';
+import * as grpc from '@grpc/grpc-js';
+import { user, userService } from 'compsci399-grpc-client';
 
 // Create a request
 const request = new user.GetUserRequest();
 request.setId(123);
 
-// Create a client
-// Note: You'll need to use the service client from your service-specific gRPC client file
-// This is just an example
-const client = new UserServiceClient('localhost:50051', 
-  grpc.credentials.createInsecure());
+// Create a client using the service definition
+const client = new userService.UserClient(
+  'localhost:50051', 
+  grpc.credentials.createInsecure()
+);
 
 // Make a call
 client.getUser(request, (err, response) => {
@@ -41,6 +41,48 @@ client.getUser(request, (err, response) => {
   console.log(`User name: ${response.getName()}`);
   console.log(`User email: ${response.getEmail()}`);
 });
+```
+
+#### Creating a gRPC Server with TypeScript
+
+```typescript
+import * as grpc from '@grpc/grpc-js';
+import { user, userService } from 'compsci399-grpc-client';
+
+// Create a server
+const server = new grpc.Server();
+
+// Implement the User service
+const userImpl: userService.IUserServer = {
+  getUser: (call, callback) => {
+    const userId = call.request.getId();
+    
+    // Create a response
+    const response = new user.GetUserResponse();
+    response.setId(userId);
+    response.setName('John Doe');
+    response.setEmail('john.doe@example.com');
+    
+    callback(null, response);
+  }
+};
+
+// Add the service implementation to the server
+server.addService(userService.UserService, userImpl);
+
+// Start the server
+server.bindAsync(
+  '0.0.0.0:50051', 
+  grpc.ServerCredentials.createInsecure(), 
+  (err, port) => {
+    if (err) {
+      console.error('Failed to start server:', err);
+      return;
+    }
+    server.start();
+    console.log(`Server running at 0.0.0.0:${port}`);
+  }
+);
 ```
 
 ### C# / .NET Package
@@ -102,6 +144,13 @@ If you need to regenerate the client stubs, you can trigger the GitHub Actions w
 1. Generate client stubs for Python, Node.js/TypeScript, and C#
 2. Package and publish the stubs to respective package repositories
 3. Commit the generated files back to the repository
+
+You can also locally regenerate the Node.js stubs by running:
+
+```bash
+npm install  # Install dev dependencies
+npm run generate  # Regenerate the stubs from .proto files
+```
 
 ## Adding New Service Definitions
 
