@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyDescriptionAttribute("Auto-generated gRPC client stubs")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+06699671c90400ac4d479678908d002a5fed3d13")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fb474512986440e517ffd7005c73d38608682c98")]
 [assembly: System.Reflection.AssemblyProductAttribute("Compsci399Grpc")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Compsci399Grpc")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -16,6 +16,9 @@ message UserData {
     string display_name = 4;
     string visibility = 5; // e.g., "public", "connections", "private"
     repeated Tag tags = 6;
+    string profile_picture = 7; // Added profile picture URL field
+    optional int32 age = 8;     // Added optional age field
+    string bio = 9;             // Added bio field
 }
 
 service User {
