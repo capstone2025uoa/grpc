@@ -2,16 +2,31 @@ syntax = "proto3";
 
 package user;
 
-service User {
-    rpc GetUser(GetUserRequest) returns (GetUserResponse) {}
+// Represents a tag associated with a user
+message Tag {
+    string type = 2;
+    string value = 3;
 }
 
-message GetUserRequest {
+// Represents the user data returned
+message UserData {
     int64 id = 1;
+    string username = 2;
+    string email = 3;
+    string display_name = 4;
+    string visibility = 5; // e.g., "public", "connections", "private"
+    repeated Tag tags = 6;
+}
+
+service User {
+    // Retrieves user details based on username
+    rpc GetUserByUsername(GetUserByUsernameRequest) returns (GetUserResponse) {}
+}
+
+message GetUserByUsernameRequest {
+    string username = 1;
 }
 
 message GetUserResponse {
-    int64 id = 1;
-    string name = 2;
-    string email = 3;
+    UserData user = 1;
 }
