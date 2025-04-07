@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/Users/michael/Projects/grpc/generated/csharp-package/Compsci399Grpc.csproj": {}
+    "/home/runner/work/grpc/grpc/generated/csharp-package/Compsci399Grpc.csproj": {}
   },
   "projects": {
-    "/Users/michael/Projects/grpc/generated/csharp-package/Compsci399Grpc.csproj": {
-      "version": "1.0.0",
+    "/home/runner/work/grpc/grpc/generated/csharp-package/Compsci399Grpc.csproj": {
+      "version": "1.0.10",
       "restore": {
-        "projectUniqueName": "/Users/michael/Projects/grpc/generated/csharp-package/Compsci399Grpc.csproj",
+        "projectUniqueName": "/home/runner/work/grpc/grpc/generated/csharp-package/Compsci399Grpc.csproj",
         "projectName": "Compsci399Grpc",
-        "projectPath": "/Users/michael/Projects/grpc/generated/csharp-package/Compsci399Grpc.csproj",
-        "packagesPath": "/Users/michael/.nuget/packages/",
-        "outputPath": "/Users/michael/Projects/grpc/generated/csharp-package/obj/",
+        "projectPath": "/home/runner/work/grpc/grpc/generated/csharp-package/Compsci399Grpc.csproj",
+        "packagesPath": "/home/runner/.nuget/packages/",
+        "outputPath": "/home/runner/work/grpc/grpc/generated/csharp-package/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/michael/.nuget/NuGet/NuGet.Config"
+          "/home/runner/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -37,8 +37,7 @@
           "enableAudit": "true",
           "auditLevel": "low",
           "auditMode": "direct"
-        },
-        "SdkAnalysisLevel": "9.0.200"
+        }
       },
       "frameworks": {
         "net8.0": {
@@ -69,22 +68,12 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "downloadDependencies": [
-            {
-              "name": "Microsoft.AspNetCore.App.Ref",
-              "version": "[8.0.13, 8.0.13]"
-            },
-            {
-              "name": "Microsoft.NETCore.App.Ref",
-              "version": "[8.0.13, 8.0.13]"
-            }
-          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/9.0.200/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/8.0.407/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

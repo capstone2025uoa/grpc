@@ -24,17 +24,21 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\nuser.proto\x12\x04user\"\x1c\n\x0eGetUserRequest\x12\n\n\x02id\x18\x01 \x01(\x03\":\n\x0fGetUserResponse\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\r\n\x05\x65mail\x18\x03 \x01(\t2@\n\x04User\x12\x38\n\x07GetUser\x12\x14.user.GetUserRequest\x1a\x15.user.GetUserResponse\"\x00\x62\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\nuser.proto\x12\x04user\"\"\n\x03Tag\x12\x0c\n\x04type\x18\x02 \x01(\t\x12\r\n\x05value\x18\x03 \x01(\t\"\xba\x01\n\x08UserData\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x10\n\x08username\x18\x02 \x01(\t\x12\r\n\x05\x65mail\x18\x03 \x01(\t\x12\x14\n\x0c\x64isplay_name\x18\x04 \x01(\t\x12\x12\n\nvisibility\x18\x05 \x01(\t\x12\x17\n\x04tags\x18\x06 \x03(\x0b\x32\t.user.Tag\x12\x17\n\x0fprofile_picture\x18\x07 \x01(\t\x12\x10\n\x03\x61ge\x18\x08 \x01(\x05H\x00\x88\x01\x01\x12\x0b\n\x03\x62io\x18\t \x01(\tB\x06\n\x04_age\",\n\x18GetUserByUsernameRequest\x12\x10\n\x08username\x18\x01 \x01(\t\"/\n\x0fGetUserResponse\x12\x1c\n\x04user\x18\x01 \x01(\x0b\x32\x0e.user.UserData2T\n\x04User\x12L\n\x11GetUserByUsername\x12\x1e.user.GetUserByUsernameRequest\x1a\x15.user.GetUserResponse\"\x00\x62\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'user_pb2', _globals)
 if not _descriptor._USE_C_DESCRIPTORS:
   DESCRIPTOR._loaded_options = None
-  _globals['_GETUSERREQUEST']._serialized_start=20
-  _globals['_GETUSERREQUEST']._serialized_end=48
-  _globals['_GETUSERRESPONSE']._serialized_start=50
-  _globals['_GETUSERRESPONSE']._serialized_end=108
-  _globals['_USER']._serialized_start=110
-  _globals['_USER']._serialized_end=174
+  _globals['_TAG']._serialized_start=20
+  _globals['_TAG']._serialized_end=54
+  _globals['_USERDATA']._serialized_start=57
+  _globals['_USERDATA']._serialized_end=243
+  _globals['_GETUSERBYUSERNAMEREQUEST']._serialized_start=245
+  _globals['_GETUSERBYUSERNAMEREQUEST']._serialized_end=289
+  _globals['_GETUSERRESPONSE']._serialized_start=291
+  _globals['_GETUSERRESPONSE']._serialized_end=338
+  _globals['_USER']._serialized_start=340
+  _globals['_USER']._serialized_end=424
 # @@protoc_insertion_point(module_scope)

@@ -5,7 +5,7 @@ import warnings
 
 from . import user_pb2 as user__pb2
 
-GRPC_GENERATED_VERSION = '1.70.0'
+GRPC_GENERATED_VERSION = '1.71.0'
 GRPC_VERSION = grpc.__version__
 _version_not_supported = False
 
@@ -34,9 +34,9 @@ class UserStub(object):
         Args:
             channel: A grpc.Channel.
         """
-        self.GetUser = channel.unary_unary(
-                '/user.User/GetUser',
-                request_serializer=user__pb2.GetUserRequest.SerializeToString,
+        self.GetUserByUsername = channel.unary_unary(
+                '/user.User/GetUserByUsername',
+                request_serializer=user__pb2.GetUserByUsernameRequest.SerializeToString,
                 response_deserializer=user__pb2.GetUserResponse.FromString,
                 _registered_method=True)
 
@@ -44,8 +44,9 @@ class UserStub(object):
 class UserServicer(object):
     """Missing associated documentation comment in .proto file."""
 
-    def GetUser(self, request, context):
-        """Missing associated documentation comment in .proto file."""
+    def GetUserByUsername(self, request, context):
+        """Retrieves user details based on username
+        """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
@@ -53,9 +54,9 @@ class UserServicer(object):
 
 def add_UserServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'GetUser': grpc.unary_unary_rpc_method_handler(
-                    servicer.GetUser,
-                    request_deserializer=user__pb2.GetUserRequest.FromString,
+            'GetUserByUsername': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetUserByUsername,
+                    request_deserializer=user__pb2.GetUserByUsernameRequest.FromString,
                     response_serializer=user__pb2.GetUserResponse.SerializeToString,
             ),
     }
@@ -70,7 +71,7 @@ class User(object):
     """Missing associated documentation comment in .proto file."""
 
     @staticmethod
-    def GetUser(request,
+    def GetUserByUsername(request,
             target,
             options=(),
             channel_credentials=None,
@@ -83,8 +84,8 @@ class User(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/user.User/GetUser',
-            user__pb2.GetUserRequest.SerializeToString,
+            '/user.User/GetUserByUsername',
+            user__pb2.GetUserByUsernameRequest.SerializeToString,
             user__pb2.GetUserResponse.FromString,
             options,
             channel_credentials,

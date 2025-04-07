@@ -46,16 +46,16 @@ namespace User {
     }
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::User.GetUserRequest> __Marshaller_user_GetUserRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::User.GetUserRequest.Parser));
+    static readonly grpc::Marshaller<global::User.GetUserByUsernameRequest> __Marshaller_user_GetUserByUsernameRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::User.GetUserByUsernameRequest.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::User.GetUserResponse> __Marshaller_user_GetUserResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::User.GetUserResponse.Parser));
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Method<global::User.GetUserRequest, global::User.GetUserResponse> __Method_GetUser = new grpc::Method<global::User.GetUserRequest, global::User.GetUserResponse>(
+    static readonly grpc::Method<global::User.GetUserByUsernameRequest, global::User.GetUserResponse> __Method_GetUserByUsername = new grpc::Method<global::User.GetUserByUsernameRequest, global::User.GetUserResponse>(
         grpc::MethodType.Unary,
         __ServiceName,
-        "GetUser",
-        __Marshaller_user_GetUserRequest,
+        "GetUserByUsername",
+        __Marshaller_user_GetUserByUsernameRequest,
         __Marshaller_user_GetUserResponse);
 
     /// <summary>Service descriptor</summary>
@@ -68,8 +68,14 @@ namespace User {
     [grpc::BindServiceMethod(typeof(User), "BindService")]
     public abstract partial class UserBase
     {
+      /// <summary>
+      /// Retrieves user details based on username
+      /// </summary>
+      /// <param name="request">The request received from the client.</param>
+      /// <param name="context">The context of the server-side call handler being invoked.</param>
+      /// <returns>The response to send back to the client (wrapped by a task).</returns>
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual global::System.Threading.Tasks.Task<global::User.GetUserResponse> GetUser(global::User.GetUserRequest request, grpc::ServerCallContext context)
+      public virtual global::System.Threading.Tasks.Task<global::User.GetUserResponse> GetUserByUsername(global::User.GetUserByUsernameRequest request, grpc::ServerCallContext context)
       {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
@@ -103,25 +109,53 @@ namespace User {
       {
       }
 
+      /// <summary>
+      /// Retrieves user details based on username
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+      /// <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+      /// <param name="cancellationToken">An optional token for canceling the call.</param>
+      /// <returns>The response received from the server.</returns>
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual global::User.GetUserResponse GetUser(global::User.GetUserRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      public virtual global::User.GetUserResponse GetUserByUsername(global::User.GetUserByUsernameRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
       {
-        return GetUser(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+        return GetUserByUsername(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
+      /// <summary>
+      /// Retrieves user details based on username
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="options">The options for the call.</param>
+      /// <returns>The response received from the server.</returns>
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual global::User.GetUserResponse GetUser(global::User.GetUserRequest request, grpc::CallOptions options)
+      public virtual global::User.GetUserResponse GetUserByUsername(global::User.GetUserByUsernameRequest request, grpc::CallOptions options)
       {
-        return CallInvoker.BlockingUnaryCall(__Method_GetUser, null, options, request);
+        return CallInvoker.BlockingUnaryCall(__Method_GetUserByUsername, null, options, request);
       }
+      /// <summary>
+      /// Retrieves user details based on username
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+      /// <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+      /// <param name="cancellationToken">An optional token for canceling the call.</param>
+      /// <returns>The call object.</returns>
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual grpc::AsyncUnaryCall<global::User.GetUserResponse> GetUserAsync(global::User.GetUserRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      public virtual grpc::AsyncUnaryCall<global::User.GetUserResponse> GetUserByUsernameAsync(global::User.GetUserByUsernameRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
       {
-        return GetUserAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+        return GetUserByUsernameAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
+      /// <summary>
+      /// Retrieves user details based on username
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="options">The options for the call.</param>
+      /// <returns>The call object.</returns>
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual grpc::AsyncUnaryCall<global::User.GetUserResponse> GetUserAsync(global::User.GetUserRequest request, grpc::CallOptions options)
+      public virtual grpc::AsyncUnaryCall<global::User.GetUserResponse> GetUserByUsernameAsync(global::User.GetUserByUsernameRequest request, grpc::CallOptions options)
       {
-        return CallInvoker.AsyncUnaryCall(__Method_GetUser, null, options, request);
+        return CallInvoker.AsyncUnaryCall(__Method_GetUserByUsername, null, options, request);
       }
       /// <summary>Creates a new instance of client from given <c>ClientBaseConfiguration</c>.</summary>
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
@@ -137,7 +171,7 @@ namespace User {
     public static grpc::ServerServiceDefinition BindService(UserBase serviceImpl)
     {
       return grpc::ServerServiceDefinition.CreateBuilder()
-          .AddMethod(__Method_GetUser, serviceImpl.GetUser).Build();
+          .AddMethod(__Method_GetUserByUsername, serviceImpl.GetUserByUsername).Build();
     }
 
     /// <summary>Register service method with a service binder with or without implementation. Useful when customizing the service binding logic.
@@ -147,7 +181,7 @@ namespace User {
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     public static void BindService(grpc::ServiceBinderBase serviceBinder, UserBase serviceImpl)
     {
-      serviceBinder.AddMethod(__Method_GetUser, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::User.GetUserRequest, global::User.GetUserResponse>(serviceImpl.GetUser));
+      serviceBinder.AddMethod(__Method_GetUserByUsername, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::User.GetUserByUsernameRequest, global::User.GetUserResponse>(serviceImpl.GetUserByUsername));
     }
 
   }

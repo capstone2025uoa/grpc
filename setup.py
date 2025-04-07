@@ -1,11 +1,6 @@
-# setup.py
-from setuptools import setup, find_packages
+from setuptools import setup
 import os
 import shutil
-
-# Read version from version.txt
-with open("version.txt", "r") as f:
-    version = f.read().strip()
 
 # Define source and target directories
 source_dir = 'generated/compsci399_grpc'
@@ -32,7 +27,7 @@ elif not os.path.exists(source_dir) and not os.path.exists(target_dir):
 
 setup(
     name="compsci399-grpc",
-    version=version,
+    version="1.0.10",
     packages=["compsci399_grpc"],
     install_requires=[
         "grpcio>=1.44.0",
