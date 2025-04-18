@@ -303,7 +303,7 @@
     "/home/runner/.nuget/packages/": {}
   },
   "project": {
-    "version": "1.0.10",
+    "version": "1.0.11",
     "restore": {
       "projectUniqueName": "/home/runner/work/grpc/grpc/generated/csharp-package/Compsci399Grpc.csproj",
       "projectName": "Compsci399Grpc",
@@ -371,7 +371,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/8.0.407/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/8.0.408/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

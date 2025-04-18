@@ -26,7 +26,7 @@ var client = new Greeter.GreeterClient(channel);
 
 ## Version History
 
-- 1.0.10: Current release
+- 1.0.11: Current release
 
 ## License
 

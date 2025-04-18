@@ -1,6 +1,6 @@
 {
   "name": "compsci399-grpc-client",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "Auto-generated gRPC client stubs for COMPSCI399 services",
   "main": "index.js",
   "types": "index.d.ts",

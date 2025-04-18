@@ -27,7 +27,7 @@ elif not os.path.exists(source_dir) and not os.path.exists(target_dir):
 
 setup(
     name="compsci399-grpc",
-    version="1.0.10",
+    version="1.0.11",
     packages=["compsci399_grpc"],
     install_requires=[
         "grpcio>=1.44.0",
